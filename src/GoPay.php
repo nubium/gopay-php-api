@@ -19,9 +19,17 @@ class GoPay
     private $config;
     private $browser;
 
+    private $urls = [
+        true => 'https://gate.gopay.cz/',
+        false => 'https://gw.sandbox.gopay.com/'
+    ];
+
     public function __construct(array $config, JsonBrowser $b)
     {
         $this->config = $config;
+        if (isset($config['sandboxApiUrl']) && !empty($config['sandboxApiUrl'])) {
+            $this->urls[false] = $config['sandboxApiUrl'];
+        }
         $this->browser = $b;
     }
 
@@ -41,11 +49,7 @@ class GoPay
 
     public function buildUrl($urlPath)
     {
-        static $urls = [
-                true => 'https://gate.gopay.cz/',
-                false => 'https://gw.sandbox.gopay.com/'
-        ];
-        return $urls[(bool)$this->getConfig('isProductionMode')] . $urlPath;
+        return $this->urls[(bool)$this->getConfig('isProductionMode')] . $urlPath;
     }
 
     private function encodeData($contentType, $data)

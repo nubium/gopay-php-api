@@ -40,6 +40,7 @@ $gopay = GoPay\Api::payments([
     'clientId' => 'my id',
     'clientSecret' => 'my secret',
     'isProductionMode' => false,
+    'sandboxApiUrl' => 'https://gopay-mock.your-company.com/',
     'scope' => GoPay\Definition\TokenScope::ALL,
     'language' => GoPay\Definition\Language::CZECH,
     'timeout' => 30
